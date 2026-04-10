@@ -49,33 +49,38 @@ function activate(context) {
                 }
                 return createdStructs;
             }
-            const createdStructs = createdWithStruct(document);
-            const types = ["number", "string", "char", "bool", "byte", "auto", "any", "void", "null"];
-            const keywords = ["let", "const", "mut", "struct", "if", "else"];
-            // 1. Get the text from the start of the line up to the cursor
+            const createdStructs = createdWithStruct(document).map(t => {
+                const item = new vscode.CompletionItem(t, vscode.CompletionItemKind.Struct);
+                item.detail = "Balu Struct";
+                return item;
+            });
+            const types = ["number", "string", "char", "bool", "byte", "auto", "any", "void", "null"].map(t => {
+                const item = new vscode.CompletionItem(t, vscode.CompletionItemKind.TypeParameter);
+                item.detail = "Balu Type";
+                return item;
+            });
+            const keywords = ["let", "const", "mut", "struct", "if", "else"].map(t => {
+                const item = new vscode.CompletionItem(t, vscode.CompletionItemKind.Keyword);
+                item.detail = "Balu Keyword";
+                return item;
+            });
+            const values = ["true", "false", "null"].map(t => {
+                const item = new vscode.CompletionItem(t, vscode.CompletionItemKind.Value);
+                item.detail = "Balu Value";
+                return item;
+            });
             const linePrefix = document.lineAt(position).text.substr(0, position.character);
-            // 2. CONDITION: Only show types if we just typed a colon ":" 
-            // This matches a colon followed by optional spaces
             if (linePrefix.match(/(let|const|mut)\s*[a-zA-Z_\\u0080-\\uFFFF\\$][a-zA-Z0-9_\\u0080-\\uFFFF\\$]+?/) ||
                 linePrefix.match(/:\s*[a-zA-Z_\\u0080-\\uFFFF\\$][a-zA-Z0-9_\\u0080-\\uFFFF\\$]+?/)) {
-                const createdStructs = createdWithStruct(document);
-                return [...types, ...createdStructs].map(t => {
-                    const item = new vscode.CompletionItem(t, vscode.CompletionItemKind.TypeParameter);
-                    item.detail = "Balu Type";
-                    return item;
-                });
+                return [...createdStructs, ...types];
             }
             if (linePrefix.match(/=\s*[a-zA-Z_\\u0080-\\uFFFF\\$][a-zA-Z0-9_\\u0080-\\uFFFF\\$]+?/)) {
-                return [...createdStructs, ...types].map(t => {
-                    const item = new vscode.CompletionItem(t, vscode.CompletionItemKind.Struct);
-                    item.detail = "Balu Struct";
-                    return item;
-                });
+                return [...createdStructs, ...types, ...values];
             }
             if (linePrefix.match(/struct\s*.*/)) {
                 return [];
             }
-            return [...createdStructs, ...types, ...keywords].map(k => new vscode.CompletionItem(k, vscode.CompletionItemKind.Keyword));
+            return [...createdStructs, ...types, ...keywords, ...values];
         }
     }, ':'); // <--- CRITICAL: The ':' tells VS Code to trigger this function immediately when a colon is typed
     context.subscriptions.push(provider);

@@ -114,4 +114,4 @@ const number x = x[]{1, 2, 3};
 
 struct Type {
     x: number;
-}
+};
