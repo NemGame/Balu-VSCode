@@ -1,0 +1,25 @@
+{
+  "name": "balu-lang",
+  "displayName": "balu-lang",
+  "description": "Syntax highlighting for the Balu programming language",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.115.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "balu",
+      "aliases": ["Balu", "balu"],
+      "extensions": [".balu"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "balu",
+      "scopeName": "source.balu",
+      "path": "./syntaxes/balu.tmLanguage.json"
+    }]
+  }
+}
