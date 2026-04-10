@@ -1,0 +1,117 @@
+/* Types
+number - long double
+string - wstring
+char   - wchar_t
+byte   - unsigned char
+bool   - boolean
+any    - can switch between types in runtime
+auto   - automatically finds the type; stays the same type
+void   - nothing
+null   - null
+
+array  - stack
+*/
+struct CustomType {
+    x:number;
+};;;
+
+CustomType variableName = CustomType{
+    x:3,
+    y:4
+};
+
+string morning = "早上好";
+char sup = '早';
+
+bool 猫 = true;
+bool kéz = false;
+
+char wasd = "anyad";
+char wasd = "állat";
+
+
+let anytest = 10;      // If type is not specified, 'any' is inferred
+let anytest;           // May be inicialized without a value
+
+const autotest = 10;   // If type is not specified, 'auto' is inferred
+// const autotest;     // May not be inicialized without a value
+
+let varname: [][]unknownType[][] = 2;
+
+[]any anytest;
+[]any anytest2 = []any{1, 2, "test", false, fuck};
+
+wasd = 2;
+
+let yoo = 10;
+
+bool booltest = true;
+mut booltest2: bool = true;
+char chartest = 't';
+mut chartest: char = 't';
+byte bytestest = 10;
+mut bytestest: byte = 10;
+// any anytest = 10;  // Should raise an error, as constants may not have the 'any' type
+mut anytest: any = 10;
+auto autotest = 10;
+mut autotest: auto = 10;
+void voidtest = 10;
+mut voidtest: void = 10;
+null nulltest = 10;
+mut nulltest: null = 10;
+any[] arraytest = 10;
+mut arraytest: any[] = 10;
+
+let atest: []any[][] = 10;
+let atest: [][]any[] = 10;
+
+[]any[][] atest2 = 10;
+
+null x = null;
+
+number x = 2;
+
+let mut number x: number = 2;
+
+let number x = 2;
+
+let string test: string = "test";
+
+let booleantest = true;
+bool booleantest = false;
+
+let jsLetAny = 10;
+let jsLetType: number = 10;
+const jsConstAny = 10;
+const jsConstType: number = 10;
+
+number numberConst = 10;
+mut number numberMut = 10;
+
+mut anyMut = 10;
+
+mut numberMut2: number = 10;
+
+// mut number num: number = 10;   // Should raise an error
+// mut number num: string = 10;   // Should raise an error
+
+ let number x = 2;
+
+number numtest = 10;
+string strtest = "test";
+
+bool booltest = true;
+char chartest = 't';
+byte bytestest = 10;
+// any anytest = 10;   // Should raise an error, as constants may not have the 'any' type
+auto autotest = 10;
+void voidtest = 10;
+null nulltest = 10;
+[]any arraytest = 10;
+
+let x: number = number[]{1, 2, 3};
+const number x = x[]{1, 2, 3};
+
+struct Type {
+    x: number;
+}

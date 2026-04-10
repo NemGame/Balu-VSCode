@@ -3,10 +3,40 @@
 	"name": "Balu",
 	"patterns": [
 		{
+			"include": "#semicolon"
+		},
+		{
 			"include": "#keywords"
 		},
 		{
 			"include": "#strings"
+		},
+		{
+			"include": "#comments"
+		},
+		{
+			"include": "#structures"
+		},
+		{
+			"include": "#variable-declaration"
+		},
+		{
+			"include": "#automatic-typenames"
+		},
+		{
+			"include": "#numbers"
+		},
+		{
+			"include": "#character"
+		},
+		{
+			"include": "#booleanExpr"
+		},
+		{
+			"include": "#nullExpr"
+		},
+		{
+			"include": "#symbols"
 		}
 	],
 	"repository": {
@@ -14,6 +44,29 @@
 			"patterns": [{
 				"name": "keyword.control.balu",
 				"match": "\\b(if|while|for|return)\\b"
+			}]
+		},
+		"variable-declaration": {
+			"patterns": [{
+				"name": "storage.type.balu",
+				"match": "\\b(let|const|mut)\\b"
+			}]
+		},
+		"numbers": {
+			"name": "constant.numeric.balu",
+			"match": "\\b\\d+(\\.\\d+)?\\b"
+		},
+		"comments": {
+			"patterns": [{
+				"name": "comment.line.double-slash.balu",
+				"match": "//.*$"
+			}, {
+				"name": "comment.block.balu",
+				"begin": "/\\*",
+				"end": "\\*/"
+			}, {
+				"name": "comment.line.hash.balu",
+				"match": "#.*$"
 			}]
 		},
 		"strings": {
@@ -26,6 +79,86 @@
 					"match": "\\\\."
 				}
 			]
+		},
+		"character": {
+			"name": "string.quoted.single.balu",
+			"begin": "'",
+			"end": "'",
+			"patterns": [
+				{
+					"name": "constant.character.escape.balu",
+					"match": "\\\\."
+				}
+			]
+		},
+		"automatic-typenames": {
+			"patterns": [
+				{
+					"match": "\\b\\: *?(\\[.*\\])? *([a-zA-Z_\\u0080-\\uFFFF\\$][a-zA-Z0-9_\\u0080-\\uFFFF\\$]*)(\\[.*\\])?\\b",
+					"captures": {
+						"1": {
+							"name": "punctuation.separator.balu" 
+						},
+						"2": {
+							"name": "entity.name.type.balu"
+						}
+					}
+				},
+				{
+					"match": "(^|\\{|\\(|;) *(\\[.*\\])? *(?!let|mut|const)([a-zA-Z_\\u0080-\\uFFFF\\$][a-zA-Z0-9_\\u0080-\\uFFFF\\$]*)(\\[.*\\])? +[a-zA-Z_\\u0080-\\uFFFF\\$][a-zA-Z0-9_\\u0080-\\uFFFF\\$]*",
+					"captures": {
+						"3": {
+							"name": "entity.name.type.balu"
+						}
+					}
+				},
+				{
+					"match": "\\b(^|\\{|\\(|;) *(\\[.*\\])?([a-zA-Z_\\u0080-\\uFFFF\\$][a-zA-Z0-9_\\u0080-\\uFFFF\\$]*)(\\[.*\\])? *(\\[.*\\])?([a-zA-Z_\\u0080-\\uFFFF\\$][a-zA-Z0-9_\\u0080-\\uFFFF\\$]*)(\\[.*\\])?\\b",
+					"captures": {
+						"1": {
+							"name": "punctuation.separator.balu" 
+						},
+						"2": {
+							"name": "entity.name.type.balu"
+						}
+					}
+				},
+				{
+					"match": "(\\[.*\\])? *([a-zA-Z_\\u0080-\\uFFFF\\$][a-zA-Z0-9_\\u0080-\\uFFFF\\$]*) *(\\[.*\\])? *\\{",
+					"captures": {
+						"2": {
+							"name": "entity.name.type.balu"
+						}
+					}
+				}
+			]
+		},
+		"structures": {
+			"match": "\\b(struct)\\s*([a-zA-Z_\\u0080-\\uFFFF\\$][a-zA-Z0-9_\\u0080-\\uFFFF\\$]*)?\\b",
+			"captures": {
+				"1": {
+					"name": "keyword.declaration.struct.balu"
+				},
+				"2": {
+					"name": "entity.name.type.struct.balu"
+				}
+			}
+		},
+		"symbols": {
+			"name": "constant.other.symbol.balu",
+			"match": "\\b[a-zA-Z_\\u0080-\\uFFFF\\$][a-zA-Z0-9_\\u0080-\\uFFFF\\$]*\\b"
+		},
+		"booleanExpr": {
+			"name": "constant.language.boolean.balu",
+			"match": "\\b(true|false)\\b"
+		},
+		"nullExpr": {
+			"name": "constant.language.null.balu",
+			"match": "\\bnull\\b"
+		},
+		"semicolon": {
+			"name": "punctuation.terminator.balu",
+			"match": ";"
 		}
 	},
 	"scopeName": "source.balu"

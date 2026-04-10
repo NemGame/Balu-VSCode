@@ -1,0 +1,11 @@
+if (x == 1) {
+    print("x is 1")
+}
+
+while {
+
+}
+
+for (i in 0..10) {
+    print(i)
+}

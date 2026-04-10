@@ -10,16 +10,37 @@
     "Programming Languages"
   ],
   "contributes": {
-    "languages": [{
-      "id": "balu",
-      "aliases": ["Balu", "balu"],
-      "extensions": [".balu"],
-      "configuration": "./language-configuration.json"
-    }],
-    "grammars": [{
-      "language": "balu",
-      "scopeName": "source.balu",
-      "path": "./syntaxes/balu.tmLanguage.json"
-    }]
+    "languages": [
+      {
+        "id": "balu",
+        "aliases": [
+          "Balu",
+          "balu"
+        ],
+        "extensions": [
+          ".balu"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "balu",
+        "scopeName": "source.balu",
+        "path": "./syntaxes/balu.tmLanguage.json"
+      }
+    ]
+  },
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onLanguage:balu"
+  ],
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc --watch -p ./"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.115.0"
   }
 }
