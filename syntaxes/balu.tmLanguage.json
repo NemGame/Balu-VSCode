@@ -49,7 +49,7 @@
 		"variable-declaration": {
 			"patterns": [{
 				"name": "storage.type.balu",
-				"match": "\\b(let|const|mut)\\b"
+				"match": "\\b(let|const|mut|alias)\\b"
 			}]
 		},
 		"numbers": {

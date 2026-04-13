@@ -115,3 +115,42 @@ const number x = x[]{1, 2, 3};
 struct Type {
     x: number;
 };
+
+const CustomType varName = CustomType{
+    x: 3,
+    y: 4
+}
+
+const varName: char = 'wasd';
+
+/* */ 'wasd' /* */
+
+/* 'wasd'
+'wasd'
+'wasd' */
+
+'wasd' /*
+*/
+
+'wasd' /**/
+
+/**/ 'wasd'
+
+'wasd' /*
+*/ 'wasd'
+
+'wasd' /*
+*/ 'wasd' /**/
+
+char x = "x";
+const x: char = "xyz";
+
+string x = "yooo";
+
+char x = "xyz";
+let x: char = "xyz";
+let char x = "xyz";
+
+alias wasd = char;
+
+const varName: CustomType = null;
