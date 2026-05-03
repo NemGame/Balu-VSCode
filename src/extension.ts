@@ -122,11 +122,66 @@ function refreshDiagnostics(document: vscode.TextDocument, collection: vscode.Di
 }
 
 export function activate(context: vscode.ExtensionContext) {
+    const hoverProvider = vscode.languages.registerHoverProvider('balu', {
+        provideHover(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken) {
+            // Use a regex to ensure we only grab the word, ignoring punctuation
+            const range = document.getWordRangeAtPosition(position, /\b[a-zA-Z_][a-zA-Z0-9_]*\b/);
+            if (!range) {
+                return undefined;
+            }
+
+            const word = document.getText(range);
+
+            const lineText = document.lineAt(position.line).text;
+
+            // More specific check: is 'nameof' followed by a space/identifier THEN an equals?
+            // This helps distinguish 'nameof x = "y"' from 'let s = nameof(x)'
+            const isAssignment = document.getWordRangeAtPosition(position, new RegExp(`\\b${word}\\b\\s*[a-zA-Z_][a-zA-Z0-9_]*\\s*=`)) !== undefined;
+
+            if (word === 'nameof') {
+                const contents = new vscode.MarkdownString();
+                contents.appendMarkdown('**nameof**\n\n');
+                
+                if (isAssignment) {
+                    contents.appendMarkdown('Used here to assign a new name to a symbol at compile-time.');
+                } else {
+                    contents.appendMarkdown('Returns the name of the symbol as a `string` literal.');
+                }
+
+                return new vscode.Hover(contents);
+            }
+
+            if (word === 'typeof') {
+                const title = isAssignment ?
+                    "typeof varName = typeName" :
+                    "typeof(expression)";
+                const message = isAssignment ?
+                    "Reassigns the type of the variable" :
+                    "Returns the type of an expression";
+                return new vscode.Hover(
+                    new vscode.MarkdownString(`**${title}**\n\n${message}`)
+                );
+            }
+
+            return undefined;
+        }
+    });
+    context.subscriptions.push(hoverProvider);
+
     const provider = vscode.languages.registerCompletionItemProvider('balu', {
         provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
+            const nameof_ = new vscode.CompletionItem('nameof', vscode.CompletionItemKind.Keyword);
+            nameof_.documentation = new vscode.MarkdownString("`nameof varName = \"newName\"`\n\nAssigns a new name to a symbol at compile-time. The assigned name must be a string literal. " +
+                                    "This is useful for cases where you want to give a symbol a different name in the compiled output, such as for interop with other "+ 
+                                    "languages or to avoid naming conflicts." +
+                                    "\n\n`nameof(varName)`\n\nReturns the name of the symbol as a `string` literal. " +
+                                    "This can be used for debugging, logging, or any situation where you want to get the name of a variable, function, or type as a string.");
+            nameof_.detail = ">";
             const structs = getCreatedStructs(document).map(t => new vscode.CompletionItem(t, vscode.CompletionItemKind.Struct));
             const types = ["number", "string", "char", "bool", "byte", "auto", "any", "void", "null"].map(t => new vscode.CompletionItem(t, vscode.CompletionItemKind.TypeParameter));
-            const keywords = ["let", "const", "mut", "alias", "struct", "if", "else"].map(t => new vscode.CompletionItem(t, vscode.CompletionItemKind.Keyword));
+            let keywords = ["let", "const", "mut", "alias", "struct", "if", "else"].map(t => new vscode.CompletionItem(t, vscode.CompletionItemKind.Keyword));
+            keywords.push(nameof_);
+
             const values = ["true", "false", "null"].map(t => new vscode.CompletionItem(t, vscode.CompletionItemKind.Value));
 
             const linePrefix = document.lineAt(position).text.substring(0, position.character);

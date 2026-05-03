@@ -154,3 +154,14 @@ let char x = "xyz";
 alias wasd = char;
 
 const varName: CustomType = null;
+
+let char x = "xy";
+const char x = "xy";
+mut char x = "xy";
+alias x = "xy";
+
+typeof x = char;
+typeof x = typeof(x);
+
+nameof q = "wasd";
+string x = nameof(q);

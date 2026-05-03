@@ -9,6 +9,9 @@
 			"include": "#keywords"
 		},
 		{
+			"include": "#typeof_nameof"
+		},
+		{
 			"include": "#strings"
 		},
 		{
@@ -44,6 +47,12 @@
 			"patterns": [{
 				"name": "keyword.control.balu",
 				"match": "\\b(if|while|for|return)\\b"
+			}]
+		},
+		"typeof_nameof": {
+			"patterns": [{
+				"name": "keyword.operator.expression.typeof.balu",
+				"match": "\\b(typeof|nameof)\\b"
 			}]
 		},
 		"variable-declaration": {
