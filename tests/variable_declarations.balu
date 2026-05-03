@@ -165,3 +165,6 @@ typeof x = typeof(x);
 
 nameof q = "wasd";
 string x = nameof(q);
+
+nameof á = "w";
+typeof á = char;

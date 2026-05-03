@@ -62,8 +62,19 @@
 			}]
 		},
 		"numbers": {
-			"name": "constant.numeric.balu",
-			"match": "\\b\\d+(\\.\\d+)?\\b"
+			"patterns": [{
+				"name": "constant.numeric.balu",
+				"match": "\\b\\d+(\\.\\d+)?b?\\b"
+			},{
+				"name": "constant.numeric.hexadecimal.balu",
+				"match": "\\b0x[0-9a-fA-F]+\\b"
+			},{
+				"name": "constant.numeric.binary.balu",
+				"match": "\\b0b[01]+b?\\b"
+			},{
+				"name": "constant.numeric.octal.balu",
+				"match": "\\b0o[0-7]+b?\\b"
+			}]
 		},
 		"comments": {
 			"patterns": [{

@@ -151,7 +151,7 @@ function activate(context) {
     const hoverProvider = vscode.languages.registerHoverProvider('balu', {
         provideHover(document, position, token) {
             // Use a regex to ensure we only grab the word, ignoring punctuation
-            const range = document.getWordRangeAtPosition(position, /\b[a-zA-Z_][a-zA-Z0-9_]*\b/);
+            const range = document.getWordRangeAtPosition(position, /\b[a-zA-Z_\u0080-\uFFFF\$][a-zA-Z0-9_\u0080-\uFFFF\$]*\b/);
             if (!range) {
                 return undefined;
             }
@@ -159,7 +159,7 @@ function activate(context) {
             const lineText = document.lineAt(position.line).text;
             // More specific check: is 'nameof' followed by a space/identifier THEN an equals?
             // This helps distinguish 'nameof x = "y"' from 'let s = nameof(x)'
-            const isAssignment = document.getWordRangeAtPosition(position, new RegExp(`\\b${word}\\b\\s*[a-zA-Z_][a-zA-Z0-9_]*\\s*=`)) !== undefined;
+            const isAssignment = document.getWordRangeAtPosition(position, new RegExp(`\\b${word}\\b\\s*[a-zA-Z_\\u0080-\\uFFFF\\$][a-zA-Z0-9_\\u0080-\\uFFFF\\$]*\\s*=`)) !== undefined;
             if (word === 'nameof') {
                 const contents = new vscode.MarkdownString();
                 contents.appendMarkdown('**nameof**\n\n');
