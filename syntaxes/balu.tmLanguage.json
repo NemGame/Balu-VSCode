@@ -46,7 +46,7 @@
 		"keywords": {
 			"patterns": [{
 				"name": "keyword.control.balu",
-				"match": "\\b(if|while|for|return)\\b"
+				"match": "\\b(if|else|elif|while|for|return)\\b"
 			}]
 		},
 		"typeof_nameof": {
